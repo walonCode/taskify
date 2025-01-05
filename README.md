@@ -1,6 +1,3 @@
-Here's the complete README for **Taskify**, combining all sections:
-
-```markdown
 # Taskify
 
 Taskify is a powerful task management application built with React, Node.js, and Express. It helps users efficiently manage their tasks with features like real-time updates, authentication, and persistent storage.
@@ -44,8 +41,10 @@ Taskify is a powerful task management application built with React, Node.js, and
 3. **Set up environment variables:**
    - Create a `.env` file in the `backend` directory with the following content:
      ```env
-     MONGO_URI=your-mongodb-uri
-     JWT_SECRET=your-jwt-secret
+     DATABASE_URI=""
+     ACCESS_TOKEN_SECRET=""
+     REFRESH_TOKEN_SECRET=""
+     PORT=""
      ```
 
 4. **Run the application:**
@@ -79,6 +78,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contact
 
 For any inquiries or suggestions, please contact [Mohamed Lamin Walon-Jalloh](mailto:mohamedlaminwalonjalloh@gmail.com).
-```
 
-This is the complete README file for your **Taskify** project. You can copy and paste this into your `README.md` file. Let me know if you need further adjustments!
