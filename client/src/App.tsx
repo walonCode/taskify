@@ -2,7 +2,9 @@
 
 function App() {
   return (
-    <div className="text-4xl font-bold">App</div>
+    <div className="text-[100px] text-red-500 font-bold flex flex-col items-center min-h-screen justify-center "><div>
+     app
+      </div></div>
   )
 }
 
