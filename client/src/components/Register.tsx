@@ -8,7 +8,7 @@ export default function Register(){
     const [confirmPassword, setConfirmPassword] = useState<string>("")
     const [fullname, setFullname] = useState<string>("")
     const [email, setEmail] = useState<string>("")
-    const [role, setRole] = useState<string>("")
+    const [roles, setRoles] = useState<string>("")
 
     return(
         <div>
@@ -39,7 +39,7 @@ export default function Register(){
                     onChange={(e)=>setUsername(e.target.value)}
                     />
                     <label htmlFor="roles">roles</label>
-                    <select value={role} onChange={(e) => setRole(e.target.value)} id="role">
+                    <select value={roles} onChange={(e) => setRoles(e.target.value)} id="role">
                         <option value="Admin">Admin</option>
                         <option value="Team Member">Team Member</option>
                         <option value="Viewer">Viewer</option>

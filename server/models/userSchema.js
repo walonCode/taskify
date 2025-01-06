@@ -25,7 +25,15 @@ const userSchema = new Schema({
     roles: {
         type:String,
         enum:['Admin','Team Member','Viewer']
-    }
+    },
+    refreshToken:{
+        type:String,
+        default:""
+    },
+    tasks: [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Task'
+    }]
 })
 
 const User = mongoose.model('User', userSchema)
