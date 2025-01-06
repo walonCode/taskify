@@ -34,7 +34,40 @@ const createTask = async(req,res) => {
 }
 
 const updateTask = async(req,res) => {
+    try {
+        const { id } = req.params
+        const { status } = req.body
+        if(!id){
+            res.status(400).json({message:"Please provide an Id"})
+        }
+        if(!status){
+            res.status(400).json({message:'Field is required'})
+        }
+        const task = await task.findById({ id })
+        if(!task){
+            res.status(404).json({message:"Invalid task id"})
+        }
 
+        const validTransitions = {
+            'To Do' : 'In Progress',
+            'In Progress' : 'Completed'
+        }
+
+        if(task.status !== 'Completed' && validTransitions[task.status] !== status){
+            res.status(400).json({message:'Invalid status change'})
+        }
+
+        const updatedTask = await Task.findByIdAndUpdate(
+            id,
+            { status, updatedAt:Date.now()},
+            { new : true}
+        )
+
+        res.status(200).json(updatedTask)
+
+    }catch(error){
+        res.status(400).json({message:error})
+    }
 }
 
 const deleteTask = async(req,res) => {
