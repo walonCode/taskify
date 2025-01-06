@@ -12,11 +12,11 @@ Taskify is a powerful task management application built with React, Node.js, and
 
 ## Technologies Used
 
-- **Frontend:** React, Redux (for state management)
-- **Backend:** Node.js, Express
+- **Client:** React, Redux (for state management)
+- **Server:** Node.js, Express
 - **Database:** MongoDB
 - **Authentication:** JWT (JSON Web Token)
-- **Styling:** CSS, Bootstrap
+- **Styling:** TailwindCss, Shadcn UI
 
 ## Installation
 
@@ -29,17 +29,17 @@ Taskify is a powerful task management application built with React, Node.js, and
 2. **Install dependencies:**
    - For the backend:
      ```bash
-     cd backend
+     cd server
      npm install
      ```
    - For the frontend:
      ```bash
-     cd ../frontend
+     cd ../client
      npm install
      ```
 
 3. **Set up environment variables:**
-   - Create a `.env` file in the `backend` directory with the following content:
+   - Create a `.env` file in the `server` directory with the following content:
      ```env
      DATABASE_URI=""
      ACCESS_TOKEN_SECRET=""
@@ -51,15 +51,15 @@ Taskify is a powerful task management application built with React, Node.js, and
    - Start the backend server:
      ```bash
      cd backend
-     npm start
+     npm run dev
      ```
    - Start the frontend development server:
      ```bash
      cd ../frontend
-     npm start
+     npm run dev
      ```
 
-   The frontend will typically run on `http://localhost:3000` and the backend on `http://localhost:5000`.
+   The client will typically run on `http://localhost:5176` and the server on `http://localhost:3000`.
 
 ## Usage
 
