@@ -45,6 +45,16 @@ taskSchema.pre('save', function(next) {
     next();
 });
 
+taskSchema.pre('findOneAndDelete', async function(next) {
+    const task = await this.model.findOne(this.getQuery());
+    if (task) {
+        await User.findByIdAndUpdate(task.assignedTo, {
+            $pull: { tasks: task._id }
+        });
+    }
+    next();
+});
+
 const Task = mongoose.model('Task',taskSchema)
 
 export default Task

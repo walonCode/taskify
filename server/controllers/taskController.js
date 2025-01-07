@@ -29,7 +29,7 @@ const createTask = async(req,res) => {
         
         res.status(201).json({message:newTask})
     }catch(error){
-        res.status(400).json({message:error})
+        res.status(500).json({message:"Server error",error})
     }    
 }
 
@@ -66,20 +66,46 @@ const updateTask = async(req,res) => {
         res.status(200).json(updatedTask)
 
     }catch(error){
-        res.status(400).json({message:error})
+        res.status(500).json({message:"Server error",error})
     }
 }
 
 const deleteTask = async(req,res) => {
-
+    try{
+        const { id } = req.params
+        const task = await Task.findByIdAndDelete({ _id:id })
+        if(!task){
+            res.status(404).json({message:"Task not found"})
+        }
+        res.status(200).json({message:"Task deleted"})
+    }catch(error){
+        res.status(500).json({message:error})
+    }
 }
 
 const getAllTask = async(req,res) => {
-
+    try {
+        const task = await Task.find({})
+        if(!task){
+            res.status(400).json({message:'No task assigned yet'})
+        }
+        res.status(200).json({task})
+    }catch(error){
+        res.status(500).json({messsage:'Server error',error})
+    }
 }
 
 const getTask = async(req,res) => {
-
+    try {
+        const { id } = req.params
+        const task = await Task.findById({ _id:id});
+        if(!task){
+            res.status(400).json({message:"No task with that id found"})
+        }
+        res.statu(200).json({task})
+    }catch(error){
+        res.status(500).json({message:"Server error",error})
+    }
 }
 
 export {
