@@ -6,7 +6,7 @@ taskRouter.route('/').post(createTask)
 taskRouter.route('/:id').delete(deleteTask)
 taskRouter.route('/:id').patch(updateTask)
 taskRouter.route('/').get(getAllTask)
-taskRouter.route('/:id').get(getTask)
+taskRouter.route('/:title').get(getTask)
 
 
 export default taskRouter

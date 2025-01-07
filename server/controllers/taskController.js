@@ -97,10 +97,10 @@ const getAllTask = async(req,res) => {
 
 const getTask = async(req,res) => {
     try {
-        const { id } = req.params
-        const task = await Task.findById({ _id:id});
+        const { title } = req.params
+        const task = await Task.findById({ title });
         if(!task){
-            res.status(400).json({message:"No task with that id found"})
+            res.status(400).json({message:"No task with that title found"})
         }
         res.statu(200).json({task})
     }catch(error){
