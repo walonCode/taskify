@@ -1,5 +1,7 @@
-import { useState } from "react"
+import { useState,useContext } from "react"
 import { Link } from "react-router-dom"
+import AuthContext from "@/contexts/AuthContext"
+import { toast, ToastContainer } from "react-toastify"
 
 
 export default function Register(){
@@ -9,6 +11,19 @@ export default function Register(){
     const [fullname, setFullname] = useState<string>("")
     const [email, setEmail] = useState<string>("")
     const [roles, setRoles] = useState<string>("")
+    
+    const { handleRegister } = useContext(AuthContext) || {}
+
+    const handleSubmit = async(e:React.FormEvent<HTMLFormElement>):Promise<void> => {
+        try{
+            e.preventDefault()
+            await handleRegister!(fullname,username,password,email,roles)
+            toast('register sucessfully')
+        }catch(error){
+            toast('register failed')
+            console.log("register failed", error)
+        }
+    }
 
     return(
         <div>
@@ -16,25 +31,25 @@ export default function Register(){
                 <h1>Register Page</h1>
             </div>
             <main>
-                <form>
+                <form onSubmit={handleSubmit}>
                 <label htmlFor="fullname">Fullname</label>
                     <input type="text"
                     id="fullname"
-                    required
+                    
                     value={fullname}
                     onChange={(e)=>setFullname(e.target.value)}
                     />
                     <label htmlFor="email">email</label>
                     <input type="email"
                     id="email"
-                    required
+                    
                     value={email}
                     onChange={(e)=>setEmail(e.target.value)}
                     />
                     <label htmlFor="username">username</label>
                     <input type="text"
                     id="username"
-                    required
+                    
                     value={username}
                     onChange={(e)=>setUsername(e.target.value)}
                     />
@@ -47,14 +62,14 @@ export default function Register(){
                     <label htmlFor="password">password</label>
                     <input type="password"
                     id="password"
-                    required
+                    
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     />
                     <label htmlFor="confirm password">confirm password</label>
                     <input type="password"
                     id="confirm password"
-                    required
+                    
                     value={confirmPassword}
                     onChange={(e)=>setConfirmPassword(e.target.value)}
                     />
@@ -65,6 +80,11 @@ export default function Register(){
             <div>
                 <p><Link to='/login'>or login to an existing account</Link></p>
             </div>
+            <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            />
         </div>
     )
 }
