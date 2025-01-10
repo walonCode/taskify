@@ -5,16 +5,16 @@ const createTask = async(req,res) => {
     try {
         const { title, description,createdBy,assignedTo } = req.body
         if(!title || !description || !createdBy || !assignedTo){
-            res.status(404).json({mesasage:"All fields are required"})
+            return res.status(404).json({mesasage:"All fields are required"})
         }
         const task = await Task.findOne({ title })
         if(task){
-            res.status(409).json({message: 'Task already exist'})
+            return res.status(409).json({message: 'Task already exist'})
         }
 
         const user = await User.findById({assignedTo})
         if(!user){
-            res.status(404).json({message: "Invalid User"})
+            return res.status(404).json({message: "Invalid User"})
         }
         const newTask = new task({
             title,
@@ -38,14 +38,14 @@ const updateTask = async(req,res) => {
         const { id } = req.params
         const { status } = req.body
         if(!id){
-            res.status(400).json({message:"Please provide an Id"})
+            return res.status(400).json({message:"Please provide an Id"})
         }
         if(!status){
-            res.status(400).json({message:'Field is required'})
+            return res.status(400).json({message:'Field is required'})
         }
         const task = await task.findById({ id })
         if(!task){
-            res.status(404).json({message:"Invalid task id"})
+            return res.status(404).json({message:"Invalid task id"})
         }
 
         const validTransitions = {
@@ -54,7 +54,7 @@ const updateTask = async(req,res) => {
         }
 
         if(task.status !== 'Completed' && validTransitions[task.status] !== status){
-            res.status(400).json({message:'Invalid status change'})
+            return res.status(400).json({message:'Invalid status change'})
         }
 
         const updatedTask = await Task.findByIdAndUpdate(
@@ -75,7 +75,7 @@ const deleteTask = async(req,res) => {
         const { id } = req.params
         const task = await Task.findByIdAndDelete({ _id:id })
         if(!task){
-            res.status(404).json({message:"Task not found"})
+            return res.status(404).json({message:"Task not found"})
         }
         res.status(200).json({message:"Task deleted"})
     }catch(error){
@@ -87,7 +87,7 @@ const getAllTask = async(req,res) => {
     try {
         const task = await Task.find({})
         if(!task){
-            res.status(400).json({message:'No task assigned yet'})
+            return res.status(400).json({message:'No task assigned yet'})
         }
         res.status(200).json({task})
     }catch(error){
@@ -100,7 +100,7 @@ const getTask = async(req,res) => {
         const { title } = req.params
         const task = await Task.findById({ title });
         if(!task){
-            res.status(400).json({message:"No task with that title found"})
+            return res.status(400).json({message:"No task with that title found"})
         }
         res.statu(200).json({task})
     }catch(error){
