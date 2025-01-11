@@ -5,6 +5,7 @@ import Layout from "./components/Layout";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import TaskCreation from "./components/TaskCreation";
 
 
 function App() {
@@ -18,6 +19,9 @@ function App() {
           <Route index element={<Hero />} />
           {/* <Route path="reward" element={<ViewReward />} /> */}
 
+
+          {/* Protected Route  */}
+          <Route path='/task_creation' element={<TaskCreation/>}/>
         </Route>
       </Routes>
       <Footer/>

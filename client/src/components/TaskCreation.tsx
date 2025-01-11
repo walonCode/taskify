@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { ToastContainer,toast } from "react-toastify";
+import TaskContext from "@/contexts/TaskContext";
 
 function TaskCreation(){
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>("")
 
-    const handleSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
+    const { createTask }  = useContext(TaskContext) || {}
+
+    const handleSubmit = async(e:React.FormEvent<HTMLFormElement>):Promise<void> => {
         try{
             e.preventDefault()
+            await createTask!(title,description)
             toast('task creation complete')
         }catch(error){
             toast('task creation failed')
