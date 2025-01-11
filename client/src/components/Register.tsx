@@ -14,10 +14,14 @@ export default function Register(){
     
     const { handleRegister } = useContext(AuthContext) || {}
 
-    const handleSubmit = async(e:React.FormEvent<HTMLFormElement>):Promise<void> => {
+    const handleSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
         try{
             e.preventDefault()
+            if (password != confirmPassword){
+                return toast('make sure your confirm password and password matches')
+            }
             await handleRegister!(fullname,username,password,email,roles)
+            console.log(roles,fullname,username,password,email)
             toast('register sucessfully')
         }catch(error){
             toast('register failed')
@@ -35,26 +39,27 @@ export default function Register(){
                 <label htmlFor="fullname">Fullname</label>
                     <input type="text"
                     id="fullname"
-                    
+                    required
                     value={fullname}
                     onChange={(e)=>setFullname(e.target.value)}
                     />
                     <label htmlFor="email">email</label>
                     <input type="email"
                     id="email"
-                    
+                    required
                     value={email}
                     onChange={(e)=>setEmail(e.target.value)}
                     />
                     <label htmlFor="username">username</label>
                     <input type="text"
                     id="username"
-                    
+                    required
                     value={username}
                     onChange={(e)=>setUsername(e.target.value)}
                     />
                     <label htmlFor="roles">roles</label>
-                    <select value={roles} onChange={(e) => setRoles(e.target.value)} id="role">
+                    <select value={roles} onChange={(e) => setRoles(e.target.value)} id="roles">
+                        <option >default</option>
                         <option value="Admin">Admin</option>
                         <option value="Team Member">Team Member</option>
                         <option value="Viewer">Viewer</option>
@@ -62,14 +67,14 @@ export default function Register(){
                     <label htmlFor="password">password</label>
                     <input type="password"
                     id="password"
-                    
+                    required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     />
                     <label htmlFor="confirm password">confirm password</label>
                     <input type="password"
                     id="confirm password"
-                    
+                    required
                     value={confirmPassword}
                     onChange={(e)=>setConfirmPassword(e.target.value)}
                     />

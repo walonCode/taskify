@@ -16,7 +16,7 @@ const createTask = async(req,res) => {
         if(!user){
             return res.status(404).json({message: "Invalid User"})
         }
-        const newTask = new task({
+        const newTask = new Task({
             title,
             description,
             createdBy,

@@ -8,14 +8,18 @@ interface TaskProp {
 
 const TaskContext = createContext<TaskProp | undefined>(undefined);
 
-export const TaskProvider = ({childern}:{childern:React.ReactNode}) => {
+export const TaskProvider = ({children}:{children:React.ReactNode}) => {
     const [task,setTask] = useState([])
+
+    const { name, userId } = useContext(AuthContext) || {}
 
     const createTask = async(title:string,description:string):Promise<void> => {
         try{
             const newTask = {
                 title,
-                description
+                description,
+                createdBy:name,
+                assignedTo:userId
             }
             const response = await axios.post('http://localhost:3000/api/task/',newTask)
             setTask(task.concat(response.data));
@@ -28,7 +32,7 @@ export const TaskProvider = ({childern}:{childern:React.ReactNode}) => {
         <TaskContext.Provider value={{
             createTask
         }}>
-            {childern}
+            {children}
         </TaskContext.Provider>
     )
 }

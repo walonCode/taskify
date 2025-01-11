@@ -15,7 +15,8 @@ const userSchema = new Schema({
     },
     email: {
         type:String,
-        required:[true, 'Email is required']
+        required:[true, 'Email is required'],
+        match : [/.+@.+\..+/, 'Please enter a valid email address'],
     },
     password: {
         type:String,
@@ -24,7 +25,8 @@ const userSchema = new Schema({
     },
     roles: {
         type:String,
-        enum:['Admin','Team Member','Viewer']
+        enum:['Admin','Team Member','Viewer'],
+        default: 'Viewer'
     },
     refreshToken:{
         type:String,

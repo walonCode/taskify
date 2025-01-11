@@ -7,25 +7,25 @@ const reqister = async(req,res) => {
         const { fullname,username,password,email,roles } = req.body
 
         //checking if all fields have data
-        if(!fullname || !username || !password || !email || !roles){
+        if(!fullname || !username || !password || !email){
             return res.status(404).json({message: "All fields are required"})
         }
 
         //checking to see if a user exist with tha username
         const user = await User.findOne({ username })
         if(user){
-            return res.statu(409).json({message: 'User already exist'})
+            return res.status(409).json({message: 'User already exist'})
         }
 
         //creating a password hashed 
-        const passwordHashed = await bcrypt.hash(password,10)
+        const passwordHashed = await bcrypt.hash(password, 10);
 
         //creating a new user in the database
-        const newUser = new user({
+        const newUser = new User({
             fullname,
             username,
             email,
-            roles,
+            roles: roles,
             password:passwordHashed
         })
 
@@ -37,7 +37,7 @@ const reqister = async(req,res) => {
 
         res.status(201).json({message:'User created',userResponse})
     }catch(error){
-        res.status(400).json({message:error})
+        res.status(500).json({message:"server error",error})
     }
 }
 
