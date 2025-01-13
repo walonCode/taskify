@@ -35,6 +35,10 @@ const userSchema = new Schema({
     tasks: [{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Task'
+    }],
+    teams:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Team'
     }]
 })
 

@@ -1,4 +1,5 @@
 import Team from "../models/teamSchema.js";
+import User from "../models/userSchema.js";
 
 const createTeam = async(req,res) => {
     try {
@@ -21,13 +22,28 @@ const createTeam = async(req,res) => {
     }
 }
 
+const getTeam =  async(req,res) => {
+    try {
+        const { teamId } = req.params
+        const team = await Team.findById({ teamId}).populate('members')
+
+        if(!team){
+            return res.status(404).json({message:'Team not found'})
+        }
+        res.status(200).json({ team })
+    }catch(error){
+        res.status(500).json({message:'Server error',error});
+    }
+}
+
 const updateTeam = async(req,res) => {
     try {
         const { id } = req.params
-        if(!id){
+        const { teamMember}  = req.body
+        if(!teamMember){
             res.status(404).json({message:'Id is required'})
         }
-        const updateTeam = Team.findByIdAndUpdate({_id:id},{$inc: {teamMember: 1}},{new: true})
+        const updateTeam = Team.findByIdAndUpdate({_id:id},{$inc: {$push: {member: teamMember}}},{new: true, useFindAndModify:false})
         if(!updateTeam){
             res.status(400).json({message:"Invalid team id"})
         }
@@ -39,5 +55,6 @@ const updateTeam = async(req,res) => {
 
 export {
     createTeam,
-    updateTeam
+    updateTeam,
+    getTeam
 }

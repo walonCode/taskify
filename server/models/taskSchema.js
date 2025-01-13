@@ -14,7 +14,8 @@ const taskSchema = new Schema({
         trim:true
     },
     dueDate:{
-        type:Date
+        type:Date,
+        default:null
     },
     createdBy: {
         type:String,
@@ -37,6 +38,11 @@ const taskSchema = new Schema({
     updatedAt:{
         type:Date,
         default:Date.now
+    },
+    team:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:"Team"
     }
 })
 

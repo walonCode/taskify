@@ -1,15 +1,21 @@
 import Task from "../models/taskSchema.js";
+import Team from "../models/teamSchema.js";
 import User from "../models/userSchema.js";
 
 const createTask = async(req,res) => {
     try {
-        const { title, description,createdBy,assignedTo } = req.body
-        if(!title || !description || !createdBy || !assignedTo){
+        const { title, description,createdBy,assignedTo,dueDate,team,status } = req.body
+        if(!title || !description || !createdBy || !assignedTo || !team){
             return res.status(404).json({mesasage:"All fields are required"})
         }
         const task = await Task.findOne({ title })
         if(task){
             return res.status(409).json({message: 'Task already exist'})
+        }
+
+        const teamInfo = await Team.findOne({ team })
+        if(!teamInfo){
+            res.status(400).json({message:'Invalid team id'})
         }
 
         const user = await User.findById({assignedTo})
@@ -20,12 +26,19 @@ const createTask = async(req,res) => {
             title,
             description,
             createdBy,
-            assignedTo
+            assignedTo,
+            status,
+            team,
+            dueDate
         })
 
         await newTask.save()
-        user.tasks = newTask._id
+
+        user.tasks.push(newTask._id)
         await user.save()
+
+        teamInfo.task.push(newTask._id);
+        await teamInfo.save()
         
         res.status(201).json({message:newTask})
     }catch(error){
@@ -97,12 +110,12 @@ const getAllTask = async(req,res) => {
 
 const getTask = async(req,res) => {
     try {
-        const { title } = req.params
-        const task = await Task.findById({ title });
+        const { team } = req.params
+        const task = await Task.find({ team });
         if(!task){
             return res.status(400).json({message:"No task with that title found"})
         }
-        res.statu(200).json({task})
+        res.status(200).json({task})
     }catch(error){
         res.status(500).json({message:"Server error",error})
     }

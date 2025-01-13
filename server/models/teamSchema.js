@@ -8,15 +8,19 @@ const teamSchema = new Schema({
         required:true,
         unique:true
     },
-    teamMember: {
-        type:Number,
-        default:0
-    },
+    teamMember:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }],
     creator: {
         type:mongoose.Schema.Types.ObjectId,
         required:true,
         ref:'User'
     },
+    task: [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Task",
+    }]
 })
 
 const Team = mongoose.model('Team',teamSchema)

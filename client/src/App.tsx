@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom"
-import Login from "./components/Login"
-import Register from "./components/Register"
+import Login from "./components/Authentication/Login"
+import Register from "./components/Authentication/Register"
 import Layout from "./components/Layout";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import TaskCreation from "./components/TaskCreation";
+import TaskCreation from "./components/Tasks/TaskCreation";
 
 
 function App() {
