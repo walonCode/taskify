@@ -9,6 +9,7 @@ import TaskCreation from "./components/Tasks/TaskCreation";
 import TaskDisplay from "./components/Tasks/TaskDisplay";
 import TeamCreation from "./components/Team/TeamCreation";
 import ViewTeam from "./components/Team/ViewTeam";
+import UserProfile from "./components/Authentication/UserProfiile";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path='/task_creation' element={<TaskCreation/>}/>
           <Route path='/team_creation' element={<TeamCreation/>}/>
           <Route path='/view_task' element={<TaskDisplay/>}/>
+          <Route path='userprofile' element={<UserProfile/>}/>
         </Route>
       </Routes>
       <Footer/>

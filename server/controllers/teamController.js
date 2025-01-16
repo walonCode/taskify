@@ -25,7 +25,7 @@ const createTeam = async(req,res) => {
 const getTeam =  async(req,res) => {
     try {
         const { teamId } = req.params
-        const team = await Team.findById({ teamId}).populate('members')
+        const team = await Team.findById({ teamId }).populate('members')
 
         if(!team){
             return res.status(404).json({message:'Team not found'})

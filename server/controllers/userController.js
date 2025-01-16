@@ -86,7 +86,25 @@ const login = async(req,res) => {
   }
 }
 
+const getUser = async(req,res) => {
+    try {
+        const { id }  = req.params
+        const user = await User.findById({ id })
+        if(!user){
+            return res.status(409).json({message: 'User not found'})
+        }
+
+        const userResponse = user.toObject()
+        delete userResponse.password
+        delete userResponse.refreshToken
+        res.status(200).json({user:userResponse})
+    }catch(error){
+        res.status(500).json({message:'server error',error})
+    }
+}
+
 export {
     reqister,
-    login
+    login,
+    getUser
 }

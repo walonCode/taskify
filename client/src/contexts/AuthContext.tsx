@@ -6,12 +6,13 @@ interface AuthProp {
     handleRegister:(fullname:string,username:string,password:string,email:string,roles:string) => Promise<void>
     name:string,
     userId: string
+    user:[]
 }
 
 const AuthContext = createContext<AuthProp | undefined>(undefined)
 
 export const AuthProvider = ({ children }:{children:React.ReactNode}) => {
-    const [user,setUser] = useState([])
+    const [user,setUser] = useState<[]>([])
     const [userId, setUserId] = useState<string>("")
     const [name, setName] = useState<string>("")
     const handleLogin = async(username:string,password:string):Promise<void> => {
@@ -21,7 +22,7 @@ export const AuthProvider = ({ children }:{children:React.ReactNode}) => {
                 password
             }
             const res = await axios.post('http://localhost:3000/api/user/login',loginUser)
-            setUser(user.concat(res.data.userResponse))
+            setUser(res.data.userResponse)
             console.log(res.data)
             if(res.data.userResponse.roles == 'Admin'){
                 setName(res.data.userResponse.fullname)
@@ -53,7 +54,8 @@ export const AuthProvider = ({ children }:{children:React.ReactNode}) => {
             handleLogin,
             handleRegister,
             name,
-            userId
+            userId,
+            user
         }}>
             { children }
         </AuthContext.Provider>
