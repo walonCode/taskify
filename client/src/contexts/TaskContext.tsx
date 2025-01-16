@@ -5,12 +5,13 @@ import AuthContext from "./AuthContext";
 interface TaskProp {
     createTask:(title:string, description:string) => Promise<void>;
     getTask:(teamId:string)=>Promise<void>;
+    task:[]
 }
 
 const TaskContext = createContext<TaskProp | undefined>(undefined);
 
 export const TaskProvider = ({children}:{children:React.ReactNode}) => {
-    const [task,setTask] = useState([])
+    const [task,setTask] = useState<[]>([])
 
     const { name, userId } = useContext(AuthContext) || {}
 
@@ -23,7 +24,7 @@ export const TaskProvider = ({children}:{children:React.ReactNode}) => {
                 assignedTo:userId
             }
             const response = await axios.post('http://localhost:3000/api/task/',newTask)
-            setTask(task.concat(response.data));
+            setTask(response.data);
             
         }catch(error){
             console.log(error)
@@ -45,7 +46,8 @@ export const TaskProvider = ({children}:{children:React.ReactNode}) => {
     return(
         <TaskContext.Provider value={{
             createTask,
-            getTask
+            getTask,
+            task
         }}>
             {children}
         </TaskContext.Provider>
